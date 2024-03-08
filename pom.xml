@@ -70,6 +70,22 @@
       <artifactId>rest-assured</artifactId>
       <scope>test</scope>
     </dependency>
+     <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.20</version>
+      <scope>provided</scope>
+    </dependency>
+     <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-container-image-docker</artifactId>
+      <version>3.4.1</version>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-core</artifactId>
+      <version>2.1.10</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
