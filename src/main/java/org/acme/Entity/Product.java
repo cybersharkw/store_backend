@@ -1,9 +1,11 @@
 package org.acme.Entity;
 
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,20 +16,19 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Product {
-
-    @Id @GeneratedValue
-    private long id;
+public class Product extends PanacheEntity  {
 
     private String name;
     private String info;
     private double price;
-    private int amount;
+    private int inventory;
 
     private String country;
     private String region;
     private int gramm;
 
+    @ManyToOne
+    @JoinColumn(name = "producer_id")
     private Producer producer;
 
 

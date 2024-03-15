@@ -2,6 +2,7 @@ package org.acme.Entity;
 
 import org.acme.Entity.Enum.WineType;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -22,6 +23,7 @@ public class Wine extends Product{
     private double alcohol;
     
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private WineType wineType;
 
 }
