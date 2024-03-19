@@ -1,6 +1,8 @@
 package org.acme.Entity;
 
 import org.acme.Entity.Enum.WineType;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,12 +21,15 @@ import lombok.Setter;
 @Entity
 public class Wine extends Product{
     
+    @FullTextField
     private String grape;
+
     private int liter;
     private double alcohol;
     
     @Enumerated(EnumType.STRING)
     @Column(nullable = true)
+    @GenericField
     private WineType wineType;
 
 }
