@@ -3,12 +3,8 @@ package org.acme.Resource;
 import java.util.List;
 
 import org.acme.Entity.Food;
-import org.acme.Entity.Producer;
 import org.acme.Repository.FoodRepository;
-import org.acme.Repository.ProducerRepository;
 import org.acme.Service.FoodService;
-import org.acme.Service.ProducerService;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
