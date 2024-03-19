@@ -2,7 +2,6 @@
 
 Dies ist eine Beispiel Applikation von einem Backend, welche Produkte verwaltet. Diese können mit hibernate Search gesucht werden. 
 
-
 ## Running the application in dev mode
 
 Erstellung Docker Image (Datenbank):
@@ -16,6 +15,5 @@ Applikation starten:
 
 > **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
 
-## Packaging and running the application
 
 
