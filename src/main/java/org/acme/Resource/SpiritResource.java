@@ -3,7 +3,6 @@ package org.acme.Resource;
 import java.util.List;
 
 import org.acme.Entity.Spirit;
-import org.acme.Entity.Wine;
 import org.acme.Repository.SpiritRepository;
 import org.acme.Service.SpiritService;
 import org.hibernate.search.mapper.orm.Search;
