@@ -28,7 +28,9 @@ public class Producer {
     @FullTextField
     private String name;
     
+    @FullTextField
     private String country;
+    
     private String region;
     private String info;
 

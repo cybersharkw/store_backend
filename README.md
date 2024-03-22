@@ -18,7 +18,30 @@ Applikation starten:
 ./mvnw compile quarkus:dev
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+> ### Gelerntes und wichtigste Informationen
 
+Ich hatte sehr Mühe dies ausfindig zu machen. Die Dokumentation ist sehr kompliziert beschrieben. 
 
+@Indexes = Dekleration für die Klasse damit Suche funktioniert
+
+@Fulltextfield = Deklaration des Attributes welches aufgesucht werden kann. Wird nur bei Strings verwendet!
+
+in der Resource Klasse gibt es 3 verschiedene such deklerationen:
+
+.bool() Komibinieren von Konditionen
+.should() Es braucht nur einen Match
+.match() Full-Text Match
+.where(f -> f.range().field("price").between(priceFrom, priceTill)) Suche von bis
+.fetchHits() wird für Pagination benutzt und setzt ein Limit
+.fetchTotalHitCount(); Zählt die Anzahl der Suchresultate
+
+#### Quellenangabe
+
+- [Quarkus - Hibernate Search ORM mit Elasticsearch](https://quarkus.io/guides/hibernate-search-orm-elasticsearch) für Annotationen
+- [Hibernate Search Dokumentation](https://docs.jboss.org/hibernate/search/6.1/reference/en-US/html_single/#preface) für Informationen zu Funktionen
+- ChatGPT, hauptsächlich bei Problemen und Misstverständisse um Klarheit zu schaffen
+
+#### Hilfe von Drittpersonen
+
+Ich hatte Probleme mit der DB und habe dafür Tipps von Simeon Liniger erhalten.
 

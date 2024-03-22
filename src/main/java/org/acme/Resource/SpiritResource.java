@@ -3,15 +3,19 @@ package org.acme.Resource;
 import java.util.List;
 
 import org.acme.Entity.Spirit;
+import org.acme.Entity.Wine;
 import org.acme.Repository.SpiritRepository;
 import org.acme.Service.SpiritService;
+import org.hibernate.search.mapper.orm.Search;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Response;
 
 
@@ -19,6 +23,9 @@ import jakarta.ws.rs.core.Response;
 @Path("spirit")
 @ApplicationScoped
 public class SpiritResource {
+
+        @Inject
+    EntityManager entityManager;
 
     @Inject
     private SpiritService spiritservice;
@@ -64,6 +71,38 @@ public class SpiritResource {
     }
 
 
+    }
+
+    @GET
+    @Path("/search")
+    public Response searchSpritssByName(@QueryParam("name") String name, @QueryParam("country") String country) {
+        List<Spirit> spirit = Search.session(entityManager)
+                .search(Spirit.class)
+                .where(f -> f.bool()
+                    .should(f.match().fields("name").matching(name))
+                    .should(f.match().fields("country").matching(country)))
+                .fetchHits(20); 
+
+        if (spirit.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).entity("No spirits found with name: " + name).build();
+        }
+
+        return Response.ok(spirit).build();
+    }
+
+    @GET
+    @Path("/searchSpiritbyAlc")
+    public Response searchWinesByPrice(@QueryParam("alocholVolume") double alcohol) {
+        List<Spirit> spirit = Search.session(entityManager)
+                .search(Spirit.class)
+                .where(f -> f.match().field("alcoholVolume").matching(alcohol))
+                .fetchHits(20); 
+
+        if (spirit.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).entity("No spirits found with AcoloholVolume from " + alcohol).build();
+        }
+
+        return Response.ok(spirit).build();
     }
     
 

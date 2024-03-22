@@ -6,6 +6,7 @@ import org.acme.Entity.Producer;
 import org.acme.Repository.ProducerRepository;
 import org.acme.Service.ProducerService;
 import org.hibernate.search.mapper.orm.Search;
+import org.hibernate.search.mapper.orm.session.SearchSession;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -23,7 +24,7 @@ import jakarta.ws.rs.core.Response;
 @ApplicationScoped
 public class ProducerResource {
 
-     @Inject
+    @Inject
     EntityManager entityManager;
 
     @Inject
@@ -74,12 +75,12 @@ public class ProducerResource {
 
     @GET
     @Path("/search")
-    public Response searchProducersByName(@QueryParam("name") String name) {
+    public Response searchProducersByName(@QueryParam("name") String name, @QueryParam("country") String country) {
         List<Producer> producers = Search.session(entityManager)
                 .search(Producer.class)
-                .where(f -> f.match()
-                        .fields("name")
-                        .matching(name))
+                .where(f -> f.bool()
+                    .should(f.match().fields("name").matching(name))
+                    .should(f.match().fields("country").matching(country)))
                 .fetchHits(20); 
 
         if (producers.isEmpty()) {
@@ -88,6 +89,25 @@ public class ProducerResource {
 
         return Response.ok(producers).build();
     }
+
+    @GET
+    @Path("/countByCountry")
+    public Response countByCountry(@QueryParam("country") String country) {
+        try {
+            SearchSession searchSession = Search.session(entityManager);
+            long totalHitCount = searchSession.search(Producer.class)
+                    .where(f -> f.match().field("country").matching(country))
+                    .fetchTotalHitCount();
+    
+       
+            return Response.ok(totalHitCount).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("An error occurred").build();
+        }
+    }
+
+
 }
     
 

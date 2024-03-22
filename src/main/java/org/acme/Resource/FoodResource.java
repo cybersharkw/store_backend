@@ -5,12 +5,16 @@ import java.util.List;
 import org.acme.Entity.Food;
 import org.acme.Repository.FoodRepository;
 import org.acme.Service.FoodService;
+import org.hibernate.search.mapper.orm.Search;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Response;
 
 
@@ -18,6 +22,9 @@ import jakarta.ws.rs.core.Response;
 @Path("food")
 @ApplicationScoped
 public class FoodResource {
+
+        @Inject
+    EntityManager entityManager;
 
     @Inject
     private FoodService foodService;
@@ -64,6 +71,25 @@ public class FoodResource {
 
 
     }
+
+    @GET
+    @Path("/search")
+    public Response searchWinesByName(@QueryParam("name") String name, @QueryParam("country") String country) {
+        List<Food> food = Search.session(entityManager)
+                .search(Food.class)
+                .where(f -> f.bool()
+                    .should(f.match().fields("name").matching(name))
+                    .should(f.match().fields("country").matching(country)))
+                .fetchHits(20); 
+
+        if (food.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).entity("No spirits found with name: " + name).build();
+        }
+
+        return Response.ok(food).build();
+    }
+
+    
     
 
 

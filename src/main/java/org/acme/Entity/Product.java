@@ -14,6 +14,7 @@ import lombok.Setter;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -36,6 +37,7 @@ public abstract class Product {
     @Column(nullable = true)
     private int inventory;
 
+    @FullTextField
     private String country;
 
     @Column(nullable = true)

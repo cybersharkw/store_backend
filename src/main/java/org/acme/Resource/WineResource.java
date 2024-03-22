@@ -5,14 +5,16 @@ import java.util.List;
 import org.acme.Entity.Wine;
 import org.acme.Repository.WineRepository;
 import org.acme.Service.WineService;
-
+import org.hibernate.search.mapper.orm.Search;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Response;
 
 
@@ -20,6 +22,10 @@ import jakarta.ws.rs.core.Response;
 @Path("wine")
 @ApplicationScoped
 public class WineResource {
+
+        @Inject
+    EntityManager entityManager;
+
 
     @Inject
     private WineService wineService;
@@ -66,6 +72,40 @@ public class WineResource {
 
 
     }
+
+    @GET
+    @Path("/search")
+    public Response searchWinesByName(@QueryParam("name") String name, @QueryParam("country") String country) {
+        List<Wine> wine = Search.session(entityManager)
+                .search(Wine.class)
+                .where(f -> f.bool()
+                    .should(f.match().fields("name").matching(name))
+                    .should(f.match().fields("country").matching(country)))
+                .fetchHits(20); 
+
+        if (wine.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).entity("No spirits found with name: " + name).build();
+        }
+
+        return Response.ok(wine).build();
+    }
+    
+    @GET
+    @Path("/searchWinebyPrice")
+    public Response searchWinesByPrice(@QueryParam("PriceFrom") double priceFrom, @QueryParam("PriceTill") double priceTill) {
+        List<Wine> wine = Search.session(entityManager)
+                .search(Wine.class)
+                .where(f -> f.range().field("price").between(priceFrom, priceTill))
+                .fetchHits(20); 
+
+        if (wine.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).entity("No spirits found with price from: " +  priceFrom + "till: " + priceTill ).build();
+        }
+
+        return Response.ok(wine).build();
+    }
+
+
     
 
 
