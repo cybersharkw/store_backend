@@ -18,22 +18,19 @@ Applikation starten:
 ./mvnw compile quarkus:dev
 ```
 
-> ### Gelerntes und wichtigste Informationen
+> ## Gelerntes und wichtigste Informationen
 
-Ich hatte sehr Mühe dies ausfindig zu machen. Die Dokumentation ist sehr kompliziert beschrieben. 
+Ich hatte sehr Mühe dies ausfindig zu machen. Die Dokumentation ist sehr kompliziert beschrieben.
 
-@Indexes = Dekleration für die Klasse damit Suche funktioniert
-
-@Fulltextfield = Deklaration des Attributes welches aufgesucht werden kann. Wird nur bei Strings verwendet!
-
-in der Resource Klasse gibt es 3 verschiedene such deklerationen:
-
-.bool() Komibinieren von Konditionen
-.should() Es braucht nur einen Match
-.match() Full-Text Match
-.where(f -> f.range().field("price").between(priceFrom, priceTill)) Suche von bis
-.fetchHits() wird für Pagination benutzt und setzt ein Limit
-.fetchTotalHitCount(); Zählt die Anzahl der Suchresultate
+- @Indexes = Deklaration für die Klasse damit Suche funktioniert
+- @Fulltextfield = Deklaration des Attributes welches aufgesucht werden kann. Wird nur bei Strings verwendet!
+- In der Resource Klasse gibt es verschiedene Suchdeklerationen:
+    - .bool() Kombinieren von Konditionen
+    - .should() Es braucht nur einen Match
+    - .match() Full-Text Match
+    - .where(f -> f.range().field("price").between(priceFrom, priceTill)) Suche von bis
+    - .fetchHits() wird für Pagination benutzt und setzt ein Limit
+    - .fetchTotalHitCount(); Zählt die Anzahl der Suchresultate
 
 #### Quellenangabe
 
