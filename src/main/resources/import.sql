@@ -1,10 +1,32 @@
--- This file allow to write SQL commands that will be emitted in test and dev.
--- The commands are commented as their support depends of the database
--- insert into myentity (id, field) values(1, 'field-1');
--- insert into myentity (id, field) values(2, 'field-2');
--- insert into myentity (id, field) values(3, 'field-3');
--- alter sequence myentity_seq restart with 4;
 --Von CHATGTP erstellt
+
+CREATE TABLE Producer (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255),
+    country VARCHAR(255),
+    region VARCHAR(255),
+    info TEXT
+);
+
+CREATE TABLE Wine (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255),
+    info TEXT,
+    price DECIMAL,
+    inventory INT,
+    country VARCHAR(255),
+    region VARCHAR(255) NULL,
+    gramm INT NULL,
+    producer_id BIGINT NULL,
+    grape VARCHAR(255),
+    liter INT,
+    alcohol DECIMAL,
+    wineType VARCHAR(255) NULL,
+    FOREIGN KEY (producer_id) REFERENCES Producer(id)
+);
+
+
+
 INSERT INTO wine (name, country, region, info, grape, liter, alcohol, price) VALUES ('Chateau Lafite Rothschild', 'Frankreich', 'Bordeaux', 'Ein sehr feiner Wein', 'Cabernet Sauvignon', 1, 13.5, 500.00);
 
 INSERT INTO wine (name, country, region, info, grape, liter, alcohol, price) VALUES ('Barolo', 'Italien', 'Piemont', 'Reich und vollmundig', 'Nebbiolo', 1, 14.0, 120.00);

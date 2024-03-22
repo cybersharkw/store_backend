@@ -6,7 +6,11 @@ Dies ist eine Beispiel Applikation von einem Backend, welche Produkte verwaltet.
 
 Erstellung Docker Image (Datenbank):
 ```shell script
-docker run --name QuarkusStoreDb -e POSTGRES_DB=storeBackend -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=1234 -p 5432:5432 -d postgres:13
+docker network create store_n
+```
+
+```shell script
+ docker run --name store-mysql -p 3306:3306 --network store-nw -e MYSQL_ROOT_PASSWORD=vs4tw -e MYSQL_USER=dbuser -e MYSQL_PASSWORD=dbuser -e MYSQL_DATABASE=storedb -d mysql:8.0
 ```
 Applikation starten:
 ```shell script
