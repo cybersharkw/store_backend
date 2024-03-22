@@ -5,13 +5,16 @@ import java.util.List;
 import org.acme.Entity.Producer;
 import org.acme.Repository.ProducerRepository;
 import org.acme.Service.ProducerService;
+import org.hibernate.search.mapper.orm.Search;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Response;
 
 
@@ -19,6 +22,9 @@ import jakarta.ws.rs.core.Response;
 @Path("producer")
 @ApplicationScoped
 public class ProducerResource {
+
+     @Inject
+    EntityManager entityManager;
 
     @Inject
     private ProducerService producerService;
@@ -65,8 +71,25 @@ public class ProducerResource {
 
 
     }
-    
 
+    @GET
+    @Path("/search")
+    public Response searchProducersByName(@QueryParam("name") String name) {
+        List<Producer> producers = Search.session(entityManager)
+                .search(Producer.class)
+                .where(f -> f.match()
+                        .fields("name")
+                        .matching(name))
+                .fetchHits(20); 
 
-    
+        if (producers.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).entity("No producers found with name: " + name).build();
+        }
+
+        return Response.ok(producers).build();
+    }
 }
+    
+
+
+    

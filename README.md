@@ -6,12 +6,13 @@ Dies ist eine Beispiel Applikation von einem Backend, welche Produkte verwaltet.
 
 Erstellung Docker Image (Datenbank):
 ```shell script
-docker network create store_n
+docker network create store_nw
 ```
 
 ```shell script
- docker run --name store-mysql -p 3306:3306 --network store-nw -e MYSQL_ROOT_PASSWORD=vs4tw -e MYSQL_USER=dbuser -e MYSQL_PASSWORD=dbuser -e MYSQL_DATABASE=storedb -d mysql:8.0
+ docker run --name store-mysql -p 3306:3306 --network store_nw -e MYSQL_ROOT_PASSWORD=vs4tw -e MYSQL_USER=dbuser -e MYSQL_PASSWORD=dbuser -e MYSQL_DATABASE=storedb -d mysql:8.0
 ```
+
 Applikation starten:
 ```shell script
 ./mvnw compile quarkus:dev
