@@ -3,6 +3,7 @@ package org.acme.Resource;
 import java.util.List;
 
 import org.acme.Entity.Wine;
+import org.acme.Entity.Enum.WineType;
 import org.acme.Repository.WineRepository;
 import org.acme.Service.WineService;
 import org.hibernate.search.mapper.orm.Search;
@@ -84,7 +85,7 @@ public class WineResource {
                 .fetchHits(20); 
 
         if (wine.isEmpty()) {
-            return Response.status(Response.Status.NOT_FOUND).entity("No spirits found with name: " + name).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("No Wines found with name: " + name).build();
         }
 
         return Response.ok(wine).build();
@@ -99,7 +100,22 @@ public class WineResource {
                 .fetchHits(20); 
 
         if (wine.isEmpty()) {
-            return Response.status(Response.Status.NOT_FOUND).entity("No spirits found with price from: " +  priceFrom + "till: " + priceTill ).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("No Wines found with price from: " +  priceFrom + "till: " + priceTill ).build();
+        }
+
+        return Response.ok(wine).build();
+    }
+
+    @GET
+    @Path("/searchWineCategories")
+    public Response searchWinesByCategorie(@QueryParam("categorie") WineType wineType) {
+        List<Wine> wine = Search.session(entityManager)
+                .search(Wine.class)
+                .where(f -> f.match().fields("categorie").matching(wineType))
+                .fetchHits(20); 
+
+        if (wine.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).entity("No Wine found with categpry: " + wineType).build();
         }
 
         return Response.ok(wine).build();

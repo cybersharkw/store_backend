@@ -32,6 +32,7 @@ public class Wine extends Product{
     @Enumerated(EnumType.STRING)
     @Column(nullable = true)
     @GenericField
+    @FullTextField
     private WineType wineType;
 
 }
