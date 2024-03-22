@@ -25,3 +25,11 @@ INSERT INTO wine (name, country, region, info, grape, liter, alcohol, price) VAL
 
 INSERT INTO wine (name, country, region, info, grape, liter, alcohol, price) VALUES ('Pomerol', 'Frankreich', 'Bordeaux', 'Samtig und üppig', 'Merlot', 1, 13.5, 180.00);
 
+INSERT INTO producer (name, country, region, info) VALUES ('Weingut Müller', 'Deutschland', 'Mosel', 'Bekannt für exquisite Rieslinge.');
+INSERT INTO producer (name, country, region, info) VALUES ('Domaine Leroy', 'Frankreich', 'Burgund', 'Erzeugt einige der weltbesten Pinot Noirs.');
+INSERT INTO producer (name, country, region, info) VALUES ('Antinori', 'Italien', 'Toskana', 'Historisches Weingut mit innovativem Geist.');
+INSERT INTO producer (name, country, region, info) VALUES ('Bodega Catena Zapata', 'Argentinien', 'Mendoza', 'Vorreiter der hochwertigen Malbec-Produktion.');
+INSERT INTO producer (name, country, region, info) VALUES ('Penfolds', 'Australien', 'South Australia', 'Bekannt für den legendären Grange.');
+INSERT INTO producer (name, country, region, info) VALUES ('Robert Mondavi Winery', 'USA', 'Kalifornien', 'Pionier des modernen Weinbaus in Napa Valley.');
+INSERT INTO producer (name, country, region, info) VALUES ('Vega Sicilia', 'Spanien', 'Ribera del Duero', 'Erzeugt den prestigeträchtigen Único.');
+INSERT INTO producer (name, country, region, info) VALUES ('Quinta do Noval', 'Portugal', 'Douro', 'Berühmt für seinen herausragenden Portwein.');
