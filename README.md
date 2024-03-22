@@ -23,7 +23,7 @@ Applikation starten:
 Ich hatte sehr Mühe dies ausfindig zu machen. Die Dokumentation ist sehr kompliziert beschrieben.
 
 - @Indexes = Deklaration für die Klasse damit Suche funktioniert
-- @Fulltextfield = Deklaration des Attributes welches aufgesucht werden kann. Wird nur bei Strings verwendet! ENUM deklaration welche Strings sind, benötigen auch keine Annotation.
+- @Fulltextfield = Deklaration des Attributes welches aufgesucht werden kann. Wird nur bei Strings verwendet! ENUMS welche Strings sind, benötigen auch keine Annotation.
 - In der Resource Klasse gibt es verschiedene Suchdeklerationen:
     - .bool() Kombinieren von Konditionen
     - .should() Es braucht nur einen Match
@@ -31,6 +31,33 @@ Ich hatte sehr Mühe dies ausfindig zu machen. Die Dokumentation ist sehr kompli
     - .where(f -> f.range().field("price").between(priceFrom, priceTill)) Suche von bis
     - .fetchHits() wird für Pagination benutzt und setzt ein Limit
     - .fetchTotalHitCount(); Zählt die Anzahl der Suchresultate
+
+
+#### Beispiel-Methode
+```java
+    @GET
+    @Path("/search")
+    // Dekleration der Methode
+    public Response searchWinesByName(@QueryParam("name") String name, @QueryParam("country") String country) {
+    // Start einer Search session
+        List<Wine> wine = Search.session(entityManager)
+    //Suche
+                .search(Wine.class)
+                .where(f -> f.bool()
+    //Entweder Oder            
+                    .should(f.match().fields("name").matching(name))
+                    .should(f.match().fields("country").matching(country)))
+                    
+     //Maximal 20 Ergebnisse aufrufen               
+                .fetchHits(20); 
+
+        if (wine.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).entity("No Wines found with name: " + name).build();
+        }
+
+        return Response.ok(wine).build();
+    }
+```
 
 #### Quellenangabe
 
