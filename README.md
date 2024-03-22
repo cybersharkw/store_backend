@@ -23,7 +23,7 @@ Applikation starten:
 Ich hatte sehr Mühe dies ausfindig zu machen. Die Dokumentation ist sehr kompliziert beschrieben.
 
 - @Indexes = Deklaration für die Klasse damit Suche funktioniert
-- @Fulltextfield = Deklaration des Attributes welches aufgesucht werden kann. Wird nur bei Strings verwendet!
+- @Fulltextfield = Deklaration des Attributes welches aufgesucht werden kann. Wird nur bei Strings verwendet! ENUM deklaration welche Strings sind, benötigen auch keine Annotation.
 - In der Resource Klasse gibt es verschiedene Suchdeklerationen:
     - .bool() Kombinieren von Konditionen
     - .should() Es braucht nur einen Match
